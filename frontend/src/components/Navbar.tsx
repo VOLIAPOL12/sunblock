@@ -3,22 +3,14 @@ import sunBlock from "../assets/sunblock.png"
 
 function Navbar() {
   return (
-    <div className="bg-base-100/80 backdrop-blur-lg border-b border-base-content/10 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto">
-            <div className="navBar px-4 min-h-[4rem] justify-between">
-                <div className="flex-1 lg:flex-none">
-                    <Link to="/" className="hover:opacity-80 transition-opacity">
-                        <div className="flex items-center gap-2">
-                            <img src={sunBlock}/>
-                            <span className="font-semibold font-mono tracking-widest text-2xl
-                                bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-                                SUNBLOCK
-                            </span>
-                        </div>
-                    </Link>
-                </div>
-            </div>
-        </div>
+    <div className="bg-[#9dfa95] p-4 drop-shadow-md">
+        <header className="container mx-auto hover:scale-105 transition-all">
+            <Link to="/" className="flex justify-center items-center">
+                <img src={sunBlock} alt="sunblock logo" className="w-24 h-24 md:w-36 md:h-36"/>
+                <h1 className="italic text-2xl md:text-4xl pt-3 bg-clip-text text-transparent bg-gradient-to-r from-[#F7941D] to-secondary">SUNBLOCK</h1>
+            </Link>
+            
+        </header>
     </div>
   )
 }
