@@ -3,7 +3,6 @@ import { useLocationStore } from "../store/useLocationStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 interface LocationDropdownProps {}
 
 const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
@@ -13,11 +12,15 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
 
     useEffect(() => {
         fetchLocations()
-    },[fetchLocations]);
+    }, [fetchLocations]);
 
-    const handleSubmit = () => {
+    const handleSunscreenNavigation = () => {
+        navigate("/sunscreen");
+    };
+
+    const handleLocationSubmit = () => {
         if (selectedLocality) {
-          const fullLocation = locations.find((loc) => loc.locality === selectedLocality);
+            const fullLocation = locations.find((loc) => loc.locality === selectedLocality);
             if (fullLocation) {
                 setSelectedLocation(fullLocation);
                 navigate("/uv-page");
@@ -27,33 +30,44 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
 
     const localityList = locations.map((loc) => loc.locality);
 
-    return(
+    return (
         <>
             <Autocomplete
-            options={localityList}
-            filterOptions={(options, { inputValue }) =>
-                options
-                .filter((option) =>
-                    option.toLowerCase().includes(inputValue.toLowerCase())
-                )
-                .slice(0, 10)
-            }
-            className="mb-3"
-            onChange={(_event, newValue: any) => setSelectedLocality(newValue)}
-            renderInput={(params) => (
-            <TextField {...params} label="Search for a location" variant="outlined" />
-            )}/>
+                options={localityList}
+                filterOptions={(options, { inputValue }) =>
+                    options
+                        .filter((option) =>
+                            option.toLowerCase().includes(inputValue.toLowerCase())
+                        )
+                        .slice(0, 10)
+                }
+                className="mb-3"
+                onChange={(_event, newValue: any) => setSelectedLocality(newValue)}
+                renderInput={(params) => (
+                    <TextField {...params} label="Search for a location" variant="outlined" />
+                )}
+            />
+            
             <Button 
-            variant="contained" 
-            color="primary" 
-            className="mt-4 w-full" 
-            onClick={handleSubmit}
-            disabled={!selectedLocality}
+                variant="contained" 
+                color="primary" 
+                className="mt-4 w-full" 
+                onClick={handleLocationSubmit}
+                disabled={!selectedLocality}
             >
                 Continue
             </Button>
+            
+            <Button 
+                variant="contained" 
+                color="secondary" 
+                className="mt-4 w-full" 
+                onClick={handleSunscreenNavigation}
+            >
+                Go to Sunscreen Calculator
+            </Button>
         </>
-    )
+    );
 }
 
 export default LocationDropdown;

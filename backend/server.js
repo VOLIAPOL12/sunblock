@@ -7,6 +7,7 @@ import path from "path";
 
 import clothingRoutes from "./routes/clothingRoutes.js";
 import suburbCoordinates from "./routes/suburbCoordinateRoutes.js";
+import sunscreenRoutes from "./routes/sunscreenRoutes.js";
 
 dotenv.config();
 
@@ -24,7 +25,9 @@ app.use(morgan("dev"));
 
 app.use("/api/clothing", clothingRoutes);
 
-app.use("/api/suburbCoordinates", suburbCoordinates)
+app.use("/api/suburbCoordinates", suburbCoordinates);
+
+app.use("/api/sunscreen", sunscreenRoutes);
 
 if(process.env.NODE_ENV==="production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
@@ -34,6 +37,6 @@ if(process.env.NODE_ENV==="production") {
     })
 }
 
-app.listen(PORT, () => {
-    console.log("Served on " + PORT);
+app.listen(PORT,'127.0.0.1', () => {
+    console.log(`Server is running on port ${PORT}`);
 })

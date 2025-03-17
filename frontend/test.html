@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunscreen Calculator</title>
+    <script>
+        function calculateSunscreen() {
+            let height = parseFloat(document.getElementById("height").value);
+            let weight = parseFloat(document.getElementById("weight").value);
+            let skinTone = document.getElementById("skinTone").value;
+            let clothingCoverage = parseFloat(document.getElementById("clothingCoverage").value) / 100;
+            let uvIndex = parseFloat(document.getElementById("uvIndex").value);
+            let exposureDuration = parseFloat(document.getElementById("exposureDuration").value);
+            
+            if (isNaN(height) || isNaN(weight) || isNaN(uvIndex) || isNaN(exposureDuration)) {
+                alert("Please enter valid numbers for all inputs.");
+                return;
+            }
+          
+            // Surface Area Calculation
+            let surfaceArea = (Math.sqrt((height * weight) / 3600)) * 1000;
+            
+            // Exposed Area Calculation
+            let exposedArea = surfaceArea * (1-clothingCoverage);
+            
+            // Initial Sunscreen Amount
+            let sunscreenAmount = (exposedArea * 2) / 1000;
+            
+            // Skin Tone Adjustment
+            let skinAdjustmentFactor = skinTone === "Pale" || skinTone === "Pink" || skinTone === "Fair" ? 1.15 :
+                                       skinTone === "Tan" ? 1.0 : 0.9;
+            sunscreenAmount *= skinAdjustmentFactor;
+            
+            // UV Index Adjustment
+            let uvAdjustmentFactor = uvIndex <= 2 ? 0.9 :
+                                      uvIndex <= 5 ? 1.0 :
+                                      uvIndex <= 7 ? 1.1 :
+                                      uvIndex <= 10 ? 1.2 : 1.3;
+            sunscreenAmount *= uvAdjustmentFactor;
+            
+            // Final Adjustment Based on Exposure Time
+            sunscreenAmount *= (exposureDuration / 60);
+            
+            document.getElementById("result").innerText = `Recommended Sunscreen Amount: ${sunscreenAmount.toFixed(2)} ml`;
+        }
+    </script>
+</head>
+<body>
+    <h2>Sunscreen Calculator</h2>
+    <label>Height (cm): <input type="number" id="height"></label><br>
+    <label>Weight (kg): <input type="number" id="weight"></label><br>
+    <label>Skin Tone: 
+        <select id="skinTone">
+            <option value="Pale">Pale</option>
+            <option value="Pink">Pink</option>
+            <option value="Fair">Fair</option>
+            <option value="Tan">Tan</option>
+            <option value="Brown">Brown</option>
+            <option value="Black">Black</option>
+        </select>
+    </label><br>
+    <label>Clothing Coverage (%): <input type="number" id="clothingCoverage" value="50"></label><br>
+    <label>UV Index: <input type="number" id="uvIndex" value="5"></label><br>
+    <label>Exposure Duration (minutes): <input type="number" id="exposureDuration" value="60"></label><br>
+    <button onclick="calculateSunscreen()">Calculate</button>
+    <p id="result"></p>
+</body>
+</html>

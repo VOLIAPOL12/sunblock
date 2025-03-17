@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom"; // ⬅ 只导入 Routes 和 Route
 
+import SunscreenCalculator from "./components/SunscreenCalculator";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import BottomNavigation from "./components/BottomNavigation";
 import HomePage from "./pages/HomePage";
