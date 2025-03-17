@@ -1,155 +1,160 @@
 import { useState } from "react";
-import { TextField, Button, MenuItem, Typography, Box, Paper, Grid } from "@mui/material";
+import { TextField, Button, MenuItem, Typography, Grid, CardContent, Snackbar, Card, Alert, FormControl, Select, InputLabel } from "@mui/material";
+import { useWeatherStore } from "../store/useWeatherStore";
 
-const skinTones = ["Pale", "Fair", "Tan", "Brown", "Black"];
 
 const SunscreenCalculator = () => {
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [skinTone, setSkinTone] = useState("Fair");
-  const [clothingCoverage, setClothingCoverage] = useState("");
-  const [uvIndex, setUvIndex] = useState("");
-  const [exposureDuration, setExposureDuration] = useState("");
-  const [result, setResult] = useState("");
 
-  const handleCalculate = async () => {
-    const response = await fetch("http://localhost:5001/api/sunscreen/calculate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        height: parseFloat(height),
-        weight: parseFloat(weight),
-        skinTone,
-        clothingCoverage: parseFloat(clothingCoverage),
-        uvIndex: parseFloat(uvIndex),
-        exposureDuration: parseFloat(exposureDuration),
-      }),
-    });
+    const { weatherData } = useWeatherStore();
 
-    if (!response.ok) {
-      console.error("API Error:", response.status);
-      return;
-    }
+    const [height, setHeight] = useState("");
+    const [weight, setWeight] = useState("");
+    const [skinTone, setSkinTone] = useState("Fair");
+    const [clothingCoverage, setClothingCoverage] = useState(50);
+    const [uvIndex, setUvIndex] = useState(() => 
+        weatherData?.daily?.uv_index_max?.[0] ?? 0
+      );
+    const [exposureDuration, setExposureDuration] = useState(60);
+    const [result, setResult] = useState(null);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const data = await response.json();
-    setResult(`Recommended Sunscreen: ${data.recommendedSunscreen} ml`);
-  };
+    const handleCalculate = async () => {
+
+        if (!height || !weight || !uvIndex || !exposureDuration) {
+            setOpenSnackbar(true);
+            return;
+        }
+
+        const response = await fetch("http://localhost:5000/api/sunscreen/calculate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            height: parseFloat(height),
+            weight: parseFloat(weight),
+            skinTone,
+            clothingCoverage: parseFloat(String(clothingCoverage)),
+            uvIndex: parseFloat(String(uvIndex)),
+            exposureDuration: parseFloat(String(exposureDuration)),
+        }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setResult(data.recommendedSunscreen);
+    };
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", backgroundColor: "#eef2f7" }}>
-      <Paper elevation={5} sx={{ padding: 5, width: "45%", minWidth: 450, borderRadius: 4 }}>
-        <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: "bold", color: "#ff7043" }}>
-          Sunscreen Calculator
-        </Typography>
+    <Card className="shadow-md p-3 mt-4 mb-10 mx-auto max-w-[500px]">
+            <CardContent>
+                <Typography variant="h5" align="center" fontWeight="bold" gutterBottom>
+                    🌞 Sunscreen Calculator
+                </Typography>
 
-        <Grid container spacing={2}>
-          {/* Height */}
-          <Grid item xs={6}>
-            <TextField 
-              label="Height (cm)" 
-              fullWidth 
-              type="number" 
-              value={height} 
-              onChange={(e) => setHeight(e.target.value)} 
-              sx={{ borderRadius: "8px" }} 
-            />
-          </Grid>
+                <Grid container spacing={2}>
+                    {/* Height */}
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            fullWidth
+                            label="Height (cm)"
+                            type="number"
+                            variant="outlined"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                        />
+                    </Grid>
 
-          {/* Weight */}
-          <Grid item xs={6}>
-            <TextField 
-              label="Weight (kg)" 
-              fullWidth 
-              type="number" 
-              value={weight} 
-              onChange={(e) => setWeight(e.target.value)} 
-              sx={{ borderRadius: "8px" }} 
-            />
-          </Grid>
+                    {/* Weight */}
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            fullWidth
+                            label="Weight (kg)"
+                            type="number"
+                            variant="outlined"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)}
+                        />
+                    </Grid>
 
-          {/* Skin Tone */}
-          <Grid item xs={6}>
-            <TextField 
-              select 
-              label="Skin Tone" 
-              fullWidth 
-              value={skinTone} 
-              onChange={(e) => setSkinTone(e.target.value)} 
-              sx={{ borderRadius: "8px" }} 
-            >
-              {skinTones.map((tone) => (
-                <MenuItem key={tone} value={tone}>
-                  {tone}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
+                    {/* Skin Tone */}
+                    <Grid item xs={12}>
+                        <FormControl fullWidth>
+                            <InputLabel>Skin Tone</InputLabel>
+                            <Select value={skinTone} onChange={(e) => setSkinTone(e.target.value)}>
+                                <MenuItem value="" disabled>
+                                    Pick a skin tone
+                                </MenuItem>
+                                <MenuItem value="Pale">Pale</MenuItem>
+                                <MenuItem value="Pink">Pink</MenuItem>
+                                <MenuItem value="Fair">Fair</MenuItem>
+                                <MenuItem value="Tan">Tan</MenuItem>
+                                <MenuItem value="Brown">Brown</MenuItem>
+                                <MenuItem value="Black">Black</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
 
-          {/* Clothing Coverage */}
-          <Grid item xs={6}>
-            <TextField 
-              label="Clothing Coverage (%)" 
-              fullWidth 
-              type="number" 
-              value={clothingCoverage} 
-              onChange={(e) => setClothingCoverage(e.target.value)} 
-              sx={{ borderRadius: "8px" }} 
-            />
-          </Grid>
+                    {/* Clothing Coverage */}
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Clothing Coverage (%)"
+                            type="number"
+                            variant="outlined"
+                            value={clothingCoverage}
+                            onChange={(e) => setClothingCoverage(Number(e.target.value))}
+                        />
+                    </Grid>
 
-          {/* UV Index */}
-          <Grid item xs={6}>
-            <TextField 
-              label="UV Index" 
-              fullWidth 
-              type="number" 
-              value={uvIndex} 
-              onChange={(e) => setUvIndex(e.target.value)} 
-              sx={{ borderRadius: "8px" }} 
-            />
-          </Grid>
+                    {/* UV Index */}
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="UV Index"
+                            type="number"
+                            variant="outlined"
+                            value={uvIndex}
+                            onChange={(e) => setUvIndex(Number(e.target.value))}
+                        />
+                    </Grid>
 
-          {/* Exposure Duration */}
-          <Grid item xs={6}>
-            <TextField 
-              label="Exposure Duration (min)" 
-              fullWidth 
-              type="number" 
-              value={exposureDuration} 
-              onChange={(e) => setExposureDuration(e.target.value)} 
-              sx={{ borderRadius: "8px" }} 
-            />
-          </Grid>
+                    {/* Exposure Duration */}
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Exposure Duration (min)"
+                            type="number"
+                            variant="outlined"
+                            value={exposureDuration}
+                            onChange={(e) => setExposureDuration(Number(e.target.value))}
+                        />
+                    </Grid>
 
-          {/* Calculate Button */}
-          <Grid item xs={12} sx={{ textAlign: "center", mt: 3 }}>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              onClick={handleCalculate} 
-              sx={{ 
-                fontSize: "16px", 
-                padding: "10px 20px", 
-                borderRadius: "8px", 
-                backgroundColor: "#007BFF", 
-                "&:hover": { backgroundColor: "#0056b3" } 
-              }}
-            >
-              CALCULATE
-            </Button>
-          </Grid>
+                    {/* Calculate Button */}
+                    <Grid item xs={12}>
+                        <Button fullWidth variant="contained" color="primary" onClick={handleCalculate}>
+                            Calculate
+                        </Button>
+                    </Grid>
+                </Grid>
 
-          {/* Result */}
-          {result && (
-            <Grid item xs={12} sx={{ textAlign: "center", mt: 3 }}>
-              <Typography variant="h5" sx={{ color: "#388E3C", fontWeight: "bold", backgroundColor: "#E8F5E9", padding: "10px", borderRadius: "8px" }}>
-                {result}
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
-      </Paper>
-    </Box>
+                {/* Result */}
+                {result !== null && (
+                    <Typography variant="h6" align="center" sx={{ mt: 2, bgcolor: "#f0f0f0", p: 2, borderRadius: 2 }}>
+                        Recommended Sunscreen: <strong>{result} ml</strong>
+                    </Typography>
+                )}
+            </CardContent>
+
+            {/* Snackbar for Missing Inputs */}
+            <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)}>
+                <Alert severity="warning" onClose={() => setOpenSnackbar(false)}>
+                    Please fill in all required fields!
+                </Alert>
+            </Snackbar>
+        </Card>
   );
 };
 

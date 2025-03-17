@@ -8,10 +8,10 @@ const BottomNavigation = () => {
       <NavLink to="/" className="nav-item">
         <FaHome size={24} />
       </NavLink>
-      <NavLink to="/splash" className="nav-item">
+      <NavLink to="/sunscreen" className="nav-item">
         <FaSun size={24} />
       </NavLink>
-      <NavLink to="/uv" className="nav-item">
+      <NavLink to="/uv-impact" className="nav-item">
         <FaRadiation size={24} />
       </NavLink>
     </nav>

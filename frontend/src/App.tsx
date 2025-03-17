@@ -27,6 +27,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage/>} />
                 <Route path="/uv-page/" element={<UltraVioletPage/>} />
+                <Route path="/sunscreen" element={<SunscreenCalculator/>} />
+                <Route path="/uv-impact" element={<SunscreenCalculator/>} />
             </Routes>
             <BottomNavigation />
           </div>
