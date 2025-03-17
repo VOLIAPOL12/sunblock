@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:5001"
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : "";
 
 interface Location {
     locality: string;
@@ -18,7 +18,7 @@ interface LocationStore {
     setSelectedLocation: (location: Location) => void;
 }
 
-export const useLocationStore = create<LocationStore>((set, get) => ({
+export const useLocationStore = create<LocationStore>((set, _get) => ({
     locations: [],
     selectedLocation: null,
     error: null,
