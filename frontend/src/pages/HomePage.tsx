@@ -10,6 +10,7 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
   const handleLocationService = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        try {
           setSelectedLocation({
             locality: "Your Location",
             Lat_precise: position.coords.latitude,
@@ -17,7 +18,16 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
           });
 
           navigate("/uv-page");
-
+        } catch {
+          console.log("Something went wrong");
+        }
+      },
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          alert(
+            "You have blocked location access. Please enable it in your browser settings."
+          );
+        }
       }
     );
   };
