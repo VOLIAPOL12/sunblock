@@ -78,7 +78,7 @@ const UltraVioletPage: React.FC<UltraVioletProps> = ({}) => {
         <div className="flex flex-col items-center">
           <h2 className="text-2xl font-bold">UV Index Forecast</h2>
 
-          {uvIndex !== null ? (
+          {uvIndex !== null && uvGif ? (
             <>
               <p className="text-lg mt-2">Max Forecast: {uvIndex}</p>
               <img src={uvGif} alt={`UV Index ${uvIndex}`} className="w-64 h-64 mt-4" />
@@ -107,7 +107,7 @@ const UltraVioletPage: React.FC<UltraVioletProps> = ({}) => {
         </div>
 
         {/* Mobile View (Horizontally Scrollable) */}
-        <div className="md:hidden overflow-x-auto my-4">
+        <div className="md:hidden overflow-x-auto mt-5 mb-24">
           <div className="flex space-x-4">
             {hourlyTimes.map((time, index) => (
               <div
