@@ -7,6 +7,7 @@ import BottomNavigation from "./components/BottomNavigation";
 import HomePage from "./pages/HomePage";
 import UltraVioletPage from "./pages/UltraVioletPage";
 import SplashScreen from "./pages/SplashScreen";
+import UltraVoiletImpactPage from "./pages/UltraVioletImpactPage";
 
 function App() {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
@@ -22,13 +23,13 @@ function App() {
       {showSplashScreen ?
         (<SplashScreen/> ) :
         (
-          <div data-theme="synthwave">
+          <div data-theme="bumblebee">
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage/>} />
                 <Route path="/uv-page/" element={<UltraVioletPage/>} />
                 <Route path="/sunscreen" element={<SunscreenCalculator/>} />
-                <Route path="/uv-impact" element={<SunscreenCalculator/>} />
+                <Route path="/uv-impact" element={<UltraVoiletImpactPage/>} />
             </Routes>
             <BottomNavigation />
           </div>
