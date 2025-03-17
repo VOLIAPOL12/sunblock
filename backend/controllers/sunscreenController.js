@@ -6,7 +6,7 @@ export const calculateSunscreen = (req, res) => {
     }
 
    
-    let surfaceArea = (Math.sqrt((height * weight) / 3600)) * 1000;
+    let surfaceArea = (Math.sqrt((height * weight) / 3600)) * 10000;
     
     
     let exposedArea = surfaceArea * (1 - (clothingCoverage / 100));
