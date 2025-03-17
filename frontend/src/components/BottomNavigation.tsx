@@ -16,6 +16,9 @@ const BottomNavigation = () => {
       <NavLink to="/uv-impact" className="nav-item">
         <IoWarning size={24} />
       </NavLink>
+      <NavLink to="/not-ready" className="nav-item">
+        <IoWarning size={24} />
+      </NavLink>
     </nav>
   );
 };
