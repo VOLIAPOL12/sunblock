@@ -20,7 +20,7 @@ function App() {
       {showSplashScreen ?
         (<SplashScreen/> ) :
         (
-          <div className="min-h-screen bg-base-200 transition-colors duration-300" data-theme="synthwave">
+          <div data-theme="synthwave">
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage/>} />

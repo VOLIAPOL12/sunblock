@@ -1,17 +1,35 @@
-import { useEffect } from "react";
-import { useLocationStore } from "../store/useLocationStore"
+import { useNavigate } from "react-router-dom";
 import sunblockLive from "../assets/sunblock_live.png"
+import LocationDropdown from "../components/LocationDropdown"
+import { useLocationStore } from "../store/useLocationStore";
 
-function HomePage() {
-  const { location, loading, error, fetchLocation } = useLocationStore();
 
-  useEffect(() => {
-    fetchLocation()
-  },[fetchLocation])
+interface HomePageProps {}
+
+const HomePage: React.FC<HomePageProps> = ({}) => {
+  const { setSelectedLocation } = useLocationStore();
+  const navigate = useNavigate();
 
   const handleLocationService = () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
-      console.log(position.coords)
+      try {
+        setSelectedLocation({
+          locality: "Your Location",
+          Lat_precise: position.coords.latitude,
+          Long_precise: position.coords.longitude
+        })
+  
+        navigate("/uvpage");
+      } catch {
+        console.log("Something went wrong");
+      }
+    },
+    (error: any) => {
+      if (error.code === error.PERMISSION_DENIED) {
+        alert(
+          "You have blocked location access. Please enable it in your browser settings."
+        );
+      }
     })
   }
 
@@ -55,9 +73,7 @@ function HomePage() {
       {/* Check Sun Intensity Manually */}
       <section className="p-6 border-t text-center">
         <p className="text-gray-600">Manually check sun intensity in Victorian suburbs</p>
-        <button className="mt-2 text-purple-700 font-semibold flex items-center justify-center w-full" >
-          Choose a Victorian Suburb →
-        </button>
+        <LocationDropdown/>
       </section>
     </>
   )
