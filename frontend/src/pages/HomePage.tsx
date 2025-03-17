@@ -23,6 +23,7 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
         }
       },
       (error) => {
+        console.log(error);
         if (error.code === error.PERMISSION_DENIED) {
           alert(
             "You have blocked location access. Please enable it in your browser settings."
