@@ -10,7 +10,6 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
   const handleLocationService = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        try {
           setSelectedLocation({
             locality: "Your Location",
             Lat_precise: position.coords.latitude,
@@ -18,9 +17,7 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
           });
 
           navigate("/uv-page");
-        } catch {
-          console.log("Something went wrong");
-        }
+
       }
     );
   };
