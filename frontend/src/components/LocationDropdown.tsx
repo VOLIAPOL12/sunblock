@@ -23,6 +23,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
             const fullLocation = locations.find((loc) => loc.locality === selectedLocality);
             if (fullLocation) {
                 setSelectedLocation(fullLocation);
+                navigate("/uv-page");
             }
         }
     };
