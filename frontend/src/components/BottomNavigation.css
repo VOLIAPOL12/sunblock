@@ -1,0 +1,23 @@
+.bottom-nav {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-item {
+    color: gray;
+    text-decoration: none;
+    padding: 10px;
+  }
+  
+  .nav-item.active {
+    color: blue; /* 当前页面的 icon 高亮 */
+  }
+  
