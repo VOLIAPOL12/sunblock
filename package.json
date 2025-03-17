@@ -23,5 +23,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VOLIAPOL12/sunblock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VOLIAPOL12/sunblock/issues"
+  },
+  "homepage": "https://github.com/VOLIAPOL12/sunblock#readme"
 }

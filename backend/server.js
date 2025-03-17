@@ -6,11 +6,12 @@ import dotenv from "dotenv";
 
 import clothingRoutes from "./routes/clothingRoutes.js";
 import suburbCoordinates from "./routes/suburbCoordinateRoutes.js";
+import sunscreenRoutes from "./routes/sunscreenRoutes.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(cors());
@@ -20,7 +21,9 @@ app.use(morgan("dev"));
 
 app.use("/api/clothing", clothingRoutes);
 
-app.use("/api/suburbCoordinates", suburbCoordinates)
+app.use("/api/suburbCoordinates", suburbCoordinates);
+
+app.use("/api/sunscreen", sunscreenRoutes);
 
 async function initDB() {
     try {
@@ -31,6 +34,6 @@ async function initDB() {
     }
 }
 
-app.listen(PORT, () => {
-    console.log("Served on " + PORT);
+app.listen(PORT,'127.0.0.1', () => {
+    console.log(`Server is running on port ${PORT}`);
 })
