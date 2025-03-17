@@ -57,15 +57,6 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
             >
                 Continue
             </Button>
-            
-            <Button 
-                variant="contained" 
-                color="secondary" 
-                className="mt-4 w-full" 
-                onClick={handleSunscreenNavigation}
-            >
-                Go to Sunscreen Calculator
-            </Button>
         </>
     );
 }

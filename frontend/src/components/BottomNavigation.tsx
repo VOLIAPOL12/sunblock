@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { FaHome, FaSun, FaRadiation } from "react-icons/fa";
+import { FaHome, FaCalculator } from "react-icons/fa";
+import { IoWarning } from "react-icons/io5";
+
 import "./BottomNavigation.css"; // 样式文件（下一步创建）
 
 const BottomNavigation = () => {
@@ -9,10 +11,10 @@ const BottomNavigation = () => {
         <FaHome size={24} />
       </NavLink>
       <NavLink to="/sunscreen" className="nav-item">
-        <FaSun size={24} />
+        <FaCalculator size={24} />
       </NavLink>
       <NavLink to="/uv-impact" className="nav-item">
-        <FaRadiation size={24} />
+        <IoWarning size={24} />
       </NavLink>
     </nav>
   );
