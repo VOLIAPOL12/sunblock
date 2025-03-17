@@ -24,7 +24,7 @@ function App() {
       {showSplashScreen ?
         (<SplashScreen/> ) :
         (
-          <div data-theme="bumblebee">
+          <div>
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage/>} />
