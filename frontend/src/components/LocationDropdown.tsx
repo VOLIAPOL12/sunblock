@@ -14,10 +14,6 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
         fetchLocations()
     }, [fetchLocations]);
 
-    const handleSunscreenNavigation = () => {
-        navigate("/sunscreen");
-    };
-
     const handleLocationSubmit = () => {
         if (selectedLocality) {
             const fullLocation = locations.find((loc) => loc.locality === selectedLocality);
