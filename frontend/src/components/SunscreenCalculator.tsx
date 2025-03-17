@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextField, Button, MenuItem, Typography, Grid, CardContent, Snackbar, Card, Alert, FormControl, Select, InputLabel } from "@mui/material";
 import { useWeatherStore } from "../store/useWeatherStore";
 
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : "";
 
 const SunscreenCalculator = () => {
 
@@ -25,7 +26,7 @@ const SunscreenCalculator = () => {
             return;
         }
 
-        const response = await fetch("http://localhost:5000/api/sunscreen/calculate", {
+        const response = await fetch(BASE_URL + "/api/sunscreen/calculate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
