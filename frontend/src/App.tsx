@@ -24,7 +24,7 @@ function App() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage/>} />
-                <Route path="/uvpage/" element={<UltraVioletPage/>} />
+                <Route path="/uv-page/" element={<UltraVioletPage/>} />
             </Routes>
           </div>
         )

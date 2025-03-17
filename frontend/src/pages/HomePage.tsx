@@ -19,7 +19,7 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
           Long_precise: position.coords.longitude
         })
   
-        navigate("/uvpage");
+        navigate("/uv-page");
       } catch {
         console.log("Something went wrong");
       }
@@ -46,10 +46,10 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
         Cancer Council Victoria (2025)
       </p>
     </section>
-    <section className="bg-white p-6 text-center">
+    <section className="p-6 text-center">
         {/* Placeholder Icon */}
         <div className="mx-auto mb-4 w-24 h-24 bg-gray-300 rounded-lg flex items-center justify-center">
-        <img src={sunblockLive} alt="sunblock logo" className="w-24 h-20 md:w-36 md:h-28"/>
+        <img src={sunblockLive} alt="sunblock logo" className="w-24 md:w-36"/>
         </div>
 
         <h2 className="text-lg font-bold text-gray-800">Live Sun Intensity</h2>
@@ -71,7 +71,7 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
       </section>
 
       {/* Check Sun Intensity Manually */}
-      <section className="p-6 border-t text-center">
+      <section className="md:w-[780px] w-[360px] mx-auto border-t text-center pb-4">
         <p className="text-gray-600">Manually check sun intensity in Victorian suburbs</p>
         <LocationDropdown/>
       </section>
