@@ -18,18 +18,19 @@ function App() {
 
   return (
     <>
-      {showSplashScreen ? (
-        <SplashScreen />
-      ) : (
-        <div data-theme="synthwave">
-          <Navbar />
-          <Routes> {/* ✅ 这里的 Routes 仍然保留 */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/uvpage" element={<UltraVioletPage />} />
-          </Routes>
-          <BottomNavigation />
-        </div>
-      )}
+      {showSplashScreen ?
+        (<SplashScreen/> ) :
+        (
+          <div data-theme="synthwave">
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<HomePage/>} />
+                <Route path="/uv-page/" element={<UltraVioletPage/>} />
+            </Routes>
+            <BottomNavigation />
+          </div>
+        )
+      }
     </>
   );
 }

@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
             Long_precise: position.coords.longitude,
           });
 
-          navigate("/uvpage");
+          navigate("/uv-page");
         } catch {
           console.log("Something went wrong");
         }
@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
         </button>
       </section>
 
-      <section className="p-6 border-t text-center">
+      <section className="p-6 border-t text-center mb-16">
         <p className="text-gray-600">
           Manually check sun intensity in Victorian suburbs
         </p>
