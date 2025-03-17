@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
         </button>
       </section>
 
-      <section className="p-6 border-t text-center mb-16">
+      <section className="p-6 border-t text-center mb-16 max-w-[600px] mx-auto">
         <p className="text-gray-600">
           Manually check sun intensity in Victorian suburbs
         </p>
