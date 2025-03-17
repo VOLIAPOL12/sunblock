@@ -36,7 +36,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({}) => {
                 .filter((option) =>
                     option.toLowerCase().includes(inputValue.toLowerCase())
                 )
-                .slice(0, 10) // Limit results
+                .slice(0, 10)
             }
             className="mb-3"
             onChange={(_event, newValue: any) => setSelectedLocality(newValue)}
