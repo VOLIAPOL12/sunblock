@@ -21,6 +21,14 @@ const HomePage: React.FC = () => {  // ✅ 直接省略 HomePageProps
         } catch {
           console.log("Something went wrong");
         }
+      },
+      (error) => {
+        console.log(error);
+        if (error.code === error.PERMISSION_DENIED) {
+          alert(
+            "You have blocked location access. Please enable it in your browser settings."
+          );
+        }
       }
     );
   };
