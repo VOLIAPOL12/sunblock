@@ -35,7 +35,6 @@ const UltraVoiletImpactPage: React.FC = () => {
                             <Typography variant="body1">
                             Ultra Violet radiation is a type of radiation emitted from the sun or from other artificial sources, such as tanning beds. It has some benefits such as creating vitamin D and making people happy. However, it carries some tremendous health risks.
                             </Typography>
-                            <Typography variant="h6" sx={{ mt: 2 }}>Some examples of UV radiation sources include:</Typography>
                         </CardContent>
                         </Card>
                     </motion.div>
@@ -52,28 +51,6 @@ const UltraVoiletImpactPage: React.FC = () => {
                         </Box>
                     </motion.div>
                     </Grid>
-                </Grid>
-
-                <Typography variant="h5" fontWeight="bold" sx={{ mt: 4, mb: 2 }} align="center">
-                    ☀️ Types of UV Radiation Sources
-                </Typography>
-
-                <Grid container spacing={3}>
-                    {uvSources.map((source, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}>
-                            <Card sx={{ boxShadow: 3, textAlign: "center", height: "22rem"}}>
-                                <img src={source.img} alt={source.name} width="100%" height="160px" style={{ objectFit: "cover", borderRadius: "8px 8px 0 0" }} />
-                                <CardContent>
-                                <Typography variant="h6">{source.name}</Typography>
-                                <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                                    Image Source: <Link href={source.source} target="_blank" rel="noopener noreferrer">{source.source}</Link>
-                                </Typography>
-                                </CardContent>
-                            </Card>
-                            </motion.div>
-                        </Grid>
-                    ))}
                 </Grid>
 
                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInVariants} className="mt-8">

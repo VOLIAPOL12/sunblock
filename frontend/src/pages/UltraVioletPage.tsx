@@ -7,6 +7,14 @@ import sunVeryHigh from "../assets/sun_very_high.gif";
 import sunHigh from "../assets/sun_high.gif";
 import sunMedium from "../assets/sun_medium.gif";
 import sunLow from "../assets/sun_low.gif";
+
+import { FaWineBottle } from "react-icons/fa";
+import { MdWbShade } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { TbSunglassesFilled } from "react-icons/tb";
+import { FaRedhat, FaTshirt } from "react-icons/fa";
+
+
 import { useNavigate } from "react-router-dom";
 
 interface UltraVioletProps {}
@@ -15,8 +23,7 @@ const UltraVioletPage: React.FC<UltraVioletProps> = ({}) => {
 
   const {selectedLocation} = useLocationStore();
   const [noData, setNoData] = useState(false);
-  const [dangerMessage, setDangerMessage] = useState("");
-  const [uvGif, setUvGif] = useState<string | null>(null);
+  const [uvLevelInformation, setUvLevelInformation] = useState({dangerMessage: "", uvColor: "", uvSeverity: "", uvGif: "", recommendations: [{text: "", icon: <div></div>}]});
   const navigate = useNavigate();
 
   const { weatherData, fetchWeather } = useWeatherStore();
@@ -34,23 +41,50 @@ const UltraVioletPage: React.FC<UltraVioletProps> = ({}) => {
       const uvIndex = weatherData.daily.uv_index_max[0];
 
       if (uvIndex >= 11) {
-        setDangerMessage("Extremely Dangerous: Avoid direct sun exposure!");
-        setUvGif(sunExtreme);
+        setUvLevelInformation({
+          dangerMessage: "Avoid direct sun exposure!",
+          uvColor: "bg-purple-600 text-white",
+          uvSeverity: "EXTREMELY HIGH",
+          uvGif: sunExtreme,
+          recommendations: [{text: "Wear SPF 50+", icon: <FaWineBottle/>}, { text: "Seek Shade", icon: <MdWbShade /> }, { text: "Avoid Going Out", icon: <FaHome/>}]
+        });
       } else if (uvIndex >= 8) {
-        setDangerMessage("UV is Very High: Seek shade and wear sunscreen.");
-        setUvGif(sunVeryHigh);
+        setUvLevelInformation({
+          dangerMessage: "Seek shade and wear sunscreen.",
+          uvColor: "bg-red-500 text-white",
+          uvSeverity: "VERY HIGH",
+          uvGif: sunVeryHigh,
+          recommendations: [{text: "Wear SPF 50+", icon: <FaWineBottle/>}, { text: "Wear Sunglasses", icon: <TbSunglassesFilled />}, { text: "Wear a Hat", icon: <FaRedhat /> }]
+        });
       } else if (uvIndex >= 6) {
-        setDangerMessage("UV is High: Protect yourself with sunglasses & a hat.");
-        setUvGif(sunHigh);
+        setUvLevelInformation({
+          dangerMessage: "Protect yourself with sunglasses & a hat.",
+          uvColor: "bg-orange-400 text-white",
+          uvSeverity: "HIGH",
+          uvGif: sunHigh,
+          recommendations: [{ text: "Wear Sunglasses", icon: <TbSunglassesFilled />}, { text: "Wear Light Clothing", icon: <FaTshirt />}, {text: "Wear SPF 50+", icon: <FaWineBottle/>} ]
+        });
       } else if (uvIndex >= 3) {
-        setDangerMessage("UV is Moderate: Be cautious during peak hours.");
-        setUvGif(sunMedium);
+        setUvLevelInformation({
+          dangerMessage: "Be cautious during peak hours.",
+          uvColor: "bg-yellow-400 text-black",
+          uvSeverity: "MEDIUM",
+          uvGif: sunMedium,
+          recommendations: [{text: "Wear SPF 50+", icon: <FaWineBottle/>}]
+        });
       } else {
-        setDangerMessage("The sun is friendly today! Enjoy the outdoors.");
-        setUvGif(sunLow);
+        setUvLevelInformation({
+          dangerMessage: "The sun is friendly today! Enjoy the outdoors.",
+          uvColor: "bg-green-500 text-white",
+          uvSeverity: "LOW",
+          uvGif: sunLow,
+          recommendations: [{text: "Wear SPF 50+", icon: <FaWineBottle/>}]
+        });
       }
     }
   }, [weatherData]);
+
+
 
   const uvIndex = weatherData?.daily?.uv_index_max?.[0] ?? null;
 
@@ -78,13 +112,25 @@ const UltraVioletPage: React.FC<UltraVioletProps> = ({}) => {
         <div className="flex flex-col items-center">
           <h2 className="text-2xl font-bold">UV Index Forecast</h2>
 
-          {uvIndex !== null && uvGif ? (
+          {uvIndex !== null && uvLevelInformation.uvGif ? (
             <>
-              <p className="text-lg mt-2">Max Forecast: {uvIndex}</p>
-              <img src={uvGif} alt={`UV Index ${uvIndex}`} className="w-64 h-64 mt-4" />
+              <div className={`text-center p-2 rounded-md mt-2 ${uvLevelInformation.uvColor}`}>
+                <h3 className="text-lg font-bold">{uvLevelInformation.uvSeverity}</h3>
+              </div>
+              <p className="text-lg mt-2">Max UV index: {uvIndex}</p>
+              <img src={uvLevelInformation.uvGif} alt={`UV Index ${uvIndex}`} className="w-64 h-64 mt-4" />
               <p className="text-lg font-semibold mt-2 text-center text-gray-700">
-                {dangerMessage}
+                {uvLevelInformation.dangerMessage}
               </p>
+
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                {uvLevelInformation.recommendations.map((rec, index) => (
+                    <div key={index} className="flex flex-col items-center rounded-sm border-solid border-4 md:p-8 shadow-md ">
+                        <div className="text-3xl md:text-5xl">{rec.icon}</div>
+                        <p className="text-sm md:text-lg">{rec.text}</p>
+                    </div>
+                ))}
+            </div>
             </>
           ) : (
             <p>Loading UV index...</p>
@@ -107,7 +153,7 @@ const UltraVioletPage: React.FC<UltraVioletProps> = ({}) => {
         </div>
 
         {/* Mobile View (Horizontally Scrollable) */}
-        <div className="md:hidden overflow-x-auto mt-5 mb-24">
+        <div className="md:hidden overflow-x-auto mt-5 mb-24 mx-3">
           <div className="flex space-x-4">
             {hourlyTimes.map((time, index) => (
               <div
