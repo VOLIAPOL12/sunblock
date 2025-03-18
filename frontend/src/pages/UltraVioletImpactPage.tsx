@@ -2,20 +2,7 @@ import { Box, Card, CardContent, Container, Divider, Grid, Link, List, ListItem,
 import chart2 from "../assets/chart2.png"
 import chart1 from "../assets/chart1.png"
 import uvRadiation from "../assets/uv-radiation.jpeg";
-import sun from "../assets/sunblock.png"
-import tanningBed from "../assets/tanning_bed.jpg"
-import mercuryVaporLighting from "../assets/mercury_vapour_light.jpg"
-import flourescent from "../assets/fluorescent.png";
-import lasers from "../assets/lasers.webp";
 import { motion } from "framer-motion";
-
-const uvSources = [
-    { name: "The Sun", img: sun, source: "Made by Joshua Park" },
-    { name: "Tanning Beds", img: tanningBed, source: "https://www.tanyourhide.com/how-tanning-beds-work" },
-    { name: "Mercury Vapor Lighting", img: mercuryVaporLighting, source: "https://en.wikipedia.org/wiki/Mercury-vapor_lamp" },
-    { name: "Fluorescent", img: flourescent, source: "https://biotium.com/blog/cf-dyes-what-started-it-all-part-1-a-history-of-fluorescence/" },
-    { name: "Lasers", img: lasers, source: "https://www.wired.com/story/physicists-clear-the-air-with-a-sweet-frickin-laser-beam/" }
-];
 
 const UltraVoiletImpactPage: React.FC = () => {
     const fadeInVariants = {
